@@ -7,7 +7,8 @@ public class ProgramTest {
         // Given
         string newCurrencyName = "SEK";
         double newCurrencyValueInDollars = 0.6417;
-        Converter converter = new();
+
+        Converter.KryptoValuta converter = new();
         // When
         converter.SetPricePerUnit(newCurrencyName, newCurrencyValueInDollars);
         // Then
