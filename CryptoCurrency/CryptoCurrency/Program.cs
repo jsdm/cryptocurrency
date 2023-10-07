@@ -1,7 +1,7 @@
 ﻿public class Converter {
     //Main method
     public static void Main(string[] args) {}
-
+    public Dictionary<string, double> currencyList = new () {};
     /// <summary>
     /// Angiver prisen for en enhed af en kryptovaluta. Prisen angives i dollars.
     /// Hvis der tidligere er angivet en værdi for samme kryptovaluta, 
@@ -10,7 +10,9 @@
     /// <param name="currencyName">Navnet på den kryptovaluta der angives</param>
     /// <param name="price">Prisen på en enhed af valutaen målt i dollars. Prisen kan ikke være negativ</param>
     public void SetPricePerUnit(String currencyName, double price) {
-
+        if(currencyName == "" || currencyName == null) throw new ArgumentException("Error: Please enter a valid currency name");
+        else if(price <= 0.000000000000001 ) throw new ArgumentException("Error: Please enter a valid currency value");
+        else currencyList[currencyName] = price;
     }
 
     /// <summary>
@@ -23,6 +25,12 @@
     /// <param name="amount">Beløbet angivet i valutaen angivet i fromCurrencyName</param>
     /// <returns>Værdien af beløbet i toCurrencyName</returns>
     public double Convert(String fromCurrencyName, String toCurrencyName, double amount) {
-        return 0;
+        double fromValue , toValue;
+        if(currencyList.TryGetValue(toCurrencyName,out toValue)
+            && currencyList.TryGetValue(fromCurrencyName,out fromValue))
+            {
+                return currencyList[toCurrencyName] * amount / currencyList[fromCurrencyName];
+            }
+            else throw new ArgumentException("Error: Unknown Currency");
     }
 }
